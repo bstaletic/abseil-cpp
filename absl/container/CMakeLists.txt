@@ -14,19 +14,6 @@
 # limitations under the License.
 #
 
-# This is deprecated and will be removed in the future.  It also doesn't do
-# anything anyways.  Prefer to use the library associated with the API you are
-# using.
-absl_cc_library(
-  NAME
-    container
-  SRCS
-    "internal/raw_hash_set.cc"
-  COPTS
-    ${ABSL_DEFAULT_COPTS}
-  PUBLIC
-)
-
 absl_cc_library(
   NAME
     compressed_tuple
@@ -489,8 +476,6 @@ absl_cc_library(
     raw_hash_set
   HDRS
     "internal/raw_hash_set.h"
-  SRCS
-    "internal/raw_hash_set.cc"
   COPTS
     ${ABSL_DEFAULT_COPTS}
   DEPS
