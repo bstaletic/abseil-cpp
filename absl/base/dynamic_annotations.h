@@ -57,19 +57,6 @@
      program's synchronization using the other annotations, but these can
      be used when all else fails. */
 
-  /* Report that we may have a benign race at "pointer", with size
-     "sizeof(*(pointer))". "pointer" must be a non-void* pointer.  Insert at the
-     point where "pointer" has been allocated, preferably close to the point
-     where the race happens.  See also ANNOTATE_BENIGN_RACE_STATIC. */
-  #define ANNOTATE_BENIGN_RACE(pointer, description) \
-    AnnotateBenignRaceSized(__FILE__, __LINE__, pointer, \
-                            sizeof(*(pointer)), description)
-
-  /* Same as ANNOTATE_BENIGN_RACE(address, description), but applies to
-     the memory range [address, address+size). */
-  #define ANNOTATE_BENIGN_RACE_SIZED(address, size, description) \
-    AnnotateBenignRaceSized(__FILE__, __LINE__, address, size, description)
-
   /* Enable (enable!=0) or disable (enable==0) race detection for all threads.
      This annotation could be useful if you want to skip expensive race analysis
      during some period of program execution, e.g. during initialization. */
@@ -249,10 +236,6 @@ void AnnotateRWLockReleased(const char *file, int line,
                             const volatile void *lock, long is_w);  /* NOLINT */
 void AnnotateBenignRace(const char *file, int line,
                         const volatile void *address,
-                        const char *description);
-void AnnotateBenignRaceSized(const char *file, int line,
-                        const volatile void *address,
-                        size_t size,
                         const char *description);
 void AnnotateThreadName(const char *file, int line,
                         const char *name);

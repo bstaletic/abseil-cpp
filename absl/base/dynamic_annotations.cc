@@ -53,10 +53,6 @@ void AnnotateRWLockReleased(const char *, int,
 void AnnotateBenignRace(const char *, int,
                         const volatile void *,
                         const char *){}
-void AnnotateBenignRaceSized(const char *, int,
-                             const volatile void *,
-                             size_t,
-                             const char *) {}
 void AnnotateThreadName(const char *, int,
                         const char *){}
 void AnnotateIgnoreReadsBegin(const char *, int){}

@@ -320,10 +320,6 @@ inline ctrl_t* EmptyGroup() {
   return const_cast<ctrl_t*>(empty_group);
 }
 
-// Mixes a randomly generated per-process seed with `hash` and `ctrl` to
-// randomize insertion order within groups.
-bool ShouldInsertBackwards(size_t hash, ctrl_t* ctrl);
-
 // Returns a hash seed.
 //
 // The seed consists of the ctrl_ pointer, which adds enough entropy to ensure
@@ -1741,18 +1737,7 @@ class raw_hash_set {
       Group g{ctrl_ + seq.offset()};
       auto mask = g.MatchEmptyOrDeleted();
       if (mask) {
-#if !defined(NDEBUG)
-        // We want to force small tables to have random entries too, so
-        // in debug build we will randomly insert in either the front or back of
-        // the group.
-        // TODO(kfm,sbenza): revisit after we do unconditional mixing
-        if (ShouldInsertBackwards(hash, ctrl_))
-          return seq.offset(mask.HighestBitSet());
-        else
-          return seq.offset(mask.LowestBitSet());
-#else
         return seq.offset(mask.LowestBitSet());
-#endif
       }
       assert(seq.index() < capacity_ && "full table!");
       seq.next();
